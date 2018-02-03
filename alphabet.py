@@ -3,8 +3,6 @@ import random
 alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
 "t", "u", "v", "w", "x", "y", "z"]
 
-numbers = [1, 2, 3, 4, 5]
-
 # 1 = addition, 2 = subtraction
 operators = [1, 2]
 
@@ -14,7 +12,7 @@ oops = ["Opps. Keep trying! You'll get it next time.", "That's not right but nic
 
 def rand_let():
     x = random.choice(alphabet)
-    print(f"\n{x}")
+    print(f"\n\t{x}")
     y = input("\nType the above letter\n>>> ")
     if y == x:
         print(f"\n{random.choice(win)}")
@@ -26,12 +24,13 @@ def rand_let():
         rand_let()
 
 def rand_num():
-    a = random.choice(numbers)
-    b = random.choice(numbers)
+    # can change the range for higher sums and differences
+    a = random.randint(1, 5)
+    b = random.randint(1, 5)
     c = random.choice(operators)
     if c == 1:
         d = a + b
-        print(f"\nWhat is {a} + {b}?")
+        print(f"\n\tWhat is {a} + {b}?")
         while True:
             try:
                 x = int(input("\n>>> "))
@@ -54,7 +53,7 @@ def rand_num():
         # if you want negative numbers as answers
         if a >= b:
             d = a - b
-            print(f"\nWhat is {a} - {b}?")
+            print(f"\n\tWhat is {a} - {b}?")
             while True:
                 try:
                     x = int(input("\n>>> "))
@@ -71,7 +70,7 @@ def rand_num():
                 rand_num()
         # delete below here if you want negative answers
         else:
-            print("b > a")
+            d = b - a
             print(f"\nWhat is {b} - {a}?")
             while True:
                 try:
