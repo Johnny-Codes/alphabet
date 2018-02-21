@@ -8,7 +8,8 @@ operators = [1, 2]
 alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
 "t", "u", "v", "w", "x", "y", "z"]
 
-win = ["Good work! Let's go again.", "Way to go. Your hard work is paying off!", "Good attention for detail!"]
+win = ["Good work! Let's go again.", "Way to go. Your hard work is paying off!", "Good attention for detail!",
+       "You're awesome", "Good job!"]
 oops = ["Opps. Keep trying! You'll get it next time.", "That's not right but nice try! Keep working at it."]
 
 
@@ -22,7 +23,7 @@ class Window(Frame):
     def init_window(self):
 
         self.master.title("Learning is fun!")
-        # Style().configure("TFrame", background="#333")
+        Style().configure("TFrame", background="#93F")
         self.pack(fill=BOTH, expand=1)
 
         mathButton = Button(self, text="Numbers", command=self.math)
@@ -31,17 +32,28 @@ class Window(Frame):
         mathButton.place(x=50, y=250)
         letterButton.place(x=250, y=250)
 
-    def alphafun(self):
-        ### Need to figure out how to clear the screen/previous iteration ###
-        ### without destroy()ing the buttons from init_window ###
-        ### tried delete(), pack_forget(), and others, but it deletes everything
-        ### from init_window which I don't want deleted. I just want
-        ### the stuff below deleted when it reruns.
+        ### The question label
+        self.label_question = Label(self, text = '')
+        self.label_question.place(x=150, y=0)
+        self.label_question.pack()
+        self.label_question.configure(font=("Courier", 16), background='#93F')
 
+        ### The answer label
+        self.label_answer = Label(self, text='')
+        self.label_answer.place(x=150, y=50)
+        self.label_answer.pack()
+        self.label_answer.configure(font=("Courier", 10), background='#93F')
+
+        ### The correct answer counter label
+        self.correct_answers = 0
+        self.label_counter = Label(self, text=f"\nCorrect answers: {self.correct_answers}")
+        self.label_counter.pack()
+        self.label_counter.configure(font=("Courier", 12), background="#93F")
+
+    def alphafun(self):
         ### This is good, displays a random letter and text to screen
         self.x = random.choice(alphabet)
-        text = Label(self, text=f"Type this letter: {self.x}")
-        text.pack()
+        self.label_question.configure(text=f"Type this letter: {self.x}")
 
         ### Creating user input.
         self.user_input = StringVar()
@@ -54,15 +66,13 @@ class Window(Frame):
 
     def alphacheck(self):
 
-        Label(self, text=f"Is {self.x} the same as {self.user_input.get()}?").pack()
-
         if self.user_input.get() == self.x:
-            text = Label(self, text=f"\n{random.choice(win)}")
-            text.pack()
+            self.label_answer.configure(text = f"\n{random.choice(win)}")
+            self.correct_answers += 1
+            self.label_counter.configure(text=f"Correct answers: {self.correct_answers}")
             self.alphafun()
         else:
-            text = Label(self, text=f"\n{random.choice(oops)}")
-            text.pack()
+            self.label_answer.configure(text = f"\n{random.choice(oops)}")
             self.alphafun()
 
     def math(self):
@@ -73,7 +83,7 @@ class Window(Frame):
         if self.c == 1:
             self.d = self.a + self.b
 
-            Label(self, text=f"\nWhat is {self.a} + {self.b}?").pack()
+            self.label_question.configure(text=f"What is {self.a} + {self.b}?")
             self.math_input = IntVar()
             prompt = ttk.Entry(width=14, textvariable=self.math_input)
             prompt.place(x=150, y=200)
@@ -88,52 +98,51 @@ class Window(Frame):
             if self.a >= self.b:
                 self.d = self.a - self.b
 
-                Label(self, text=f"\nWhat is {self.a} - {self.b}?").pack()
+                self.label_question.configure(text=f"What is {self.a} - {self.b}?")
                 self.math_input2 = IntVar()
                 prompt = ttk.Entry(width=14, textvariable=self.math_input2)
                 prompt.place(x=150, y=200)
-
                 submitButton = Button(self, text="Submit", command=self.checkSubtraction)
                 submitButton.place(x=255, y=200)
             ### delete below here if you want negative answers
             else:
                 self.d = self.b - self.a
 
-                Label(self, text=f"\nWhat is {self.b} - {self.a}?").pack()
+                self.label_question.configure(text=f"What is {self.b} - {self.a}?")
                 self.math_input3 = IntVar()
                 prompt = ttk.Entry(width=14, textvariable=self.math_input3)
                 prompt.place(x=150, y=200)
-
                 submitButton = Button(self, text="Submit", command=self.checkSubtraction)
                 submitButton.place(x=255, y=200)
 
     def checkAddition(self):
         if self.d == self.math_input.get():
-            Label(self, text=f"\n{random.choice(win)}").pack()
+            self.label_answer.configure(text=f"\n{random.choice(win)}")
+            self.correct_answers += 1
+            self.label_counter.configure(text=f"Correct answers: {self.correct_answers}")
             self.math()
         else:
-            Label(self, text=f"\n{random.choice(oops)}").pack()
-            Label(self, text=f"\nThe correct answer is {self.d}").pack()
+            self.label_answer.configure(text=f"\n{random.choice(oops)}\nThe correct answer is {self.d}")
             self.math()
 
     def checkSubtraction(self):
         if self.a >= self.b:
             if self.d == self.math_input2.get():
-                text = Label(self, text=f"\n{random.choice(win)}")
-                text.pack()
+                self.label_answer.configure(text=f"\n{random.choice(win)}")
+                self.correct_answers += 1
+                self.label_counter.configure(text=f"Correct answers: {self.correct_answers}")
                 self.math()
             else:
-                text = Label(self, text=f"\n{random.choice(oops)}")
-                text.pack()
+                self.label_answer.configure(text=f"\n{random.choice(oops)}\nThe correct answer is {self.d}")
                 self.math()
         else:
             if self.d == self.math_input3.get():
-                text = Label(self, text=f"\n{random.choice(win)}")
-                text.pack()
+                self.label_answer.configure(text=f"\n{random.choice(win)}")
+                self.correct_answers += 1
+                self.label_counter.configure(text=f"Correct answers: {self.correct_answers}")
                 self.math()
             else:
-                text = Label(self, text=f"\n{random.choice(oops)}")
-                text.pack()
+                self.label_answer.configure(text=f"\n{random.choice(oops)}\nThe correct answer is {self.d}")
                 self.math()
 
 root = Tk()
@@ -141,3 +150,8 @@ root.geometry("400x300")
 
 app = Window(root)
 root.mainloop()
+
+### Resources ###
+### http://zetcode.com/gui/tkinter/layout/
+### https://pythonprogramming.net/tkinter-adding-text-images/?completed=/tkinter-menu-bar-tutorial/
+### http://www.tkdocs.com/tutorial/widgets.html
