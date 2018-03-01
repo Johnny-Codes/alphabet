@@ -1,5 +1,7 @@
 # AlphaGUI.py
 
+1 MAR 18: Changed font size, changed font to Comic Sans, and got rid of unnecessary text. Also added a counter to track correct answers for positive feedback.
+
 21 FEB 18: Fixed the below issue. Added a counter to keep track of correct answers. Thinking about adding images or something with the Pillow module (most likely). Like, instead of just correct answers, maybe put a picture of an ice cream cone for each correct answer, I don't know. 
 
 20 FEB 18: Got the game into tkinter for a GUI. Learned a lot. Need to find out how to clear contents in the frame without deleting the buttons. Possible solution is creating a new frame for the alphabet game and the math game but I don't quite understand it at the moment. Maybe add another class that runs it?
