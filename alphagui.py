@@ -26,34 +26,35 @@ class Window(Frame):
         Style().configure("TFrame", background="#93F")
         self.pack(fill=BOTH, expand=1)
 
-        mathButton = Button(self, text="Numbers", command=self.math)
-        letterButton = Button(self, text="Letters", command=self.alphafun)
+        mathButton = ttk.Button(self, text="Numbers", command=self.math)
+        # mathButton.config(bg="white")
+        letterButton = ttk.Button(self, text="Letters", command=self.alphafun)
 
         mathButton.place(x=50, y=250)
         letterButton.place(x=250, y=250)
 
         ### The question label
-        self.label_question = Label(self, text = '')
+        self.label_question = Label(self, text = 'Choose')
         self.label_question.place(x=150, y=0)
         self.label_question.pack()
-        self.label_question.configure(font=("Courier", 16), background='#93F')
+        self.label_question.configure(font=("Comic Sans MS", 30), background='#93F')
 
         ### The answer label
         self.label_answer = Label(self, text='')
         self.label_answer.place(x=150, y=50)
         self.label_answer.pack()
-        self.label_answer.configure(font=("Courier", 10), background='#93F')
+        self.label_answer.configure(font=("Comic Sans MS", 10), background='#93F')
 
         ### The correct answer counter label
         self.correct_answers = 0
         self.label_counter = Label(self, text=f"\nCorrect answers: {self.correct_answers}")
         self.label_counter.pack()
-        self.label_counter.configure(font=("Courier", 12), background="#93F")
+        self.label_counter.configure(font=("Comic Sans MS", 12), background="#93F")
 
     def alphafun(self):
         ### This is good, displays a random letter and text to screen
         self.x = random.choice(alphabet)
-        self.label_question.configure(text=f"Type this letter: {self.x}")
+        self.label_question.configure(text=f"{self.x}")
 
         ### Creating user input.
         self.user_input = StringVar()
@@ -83,7 +84,7 @@ class Window(Frame):
         if self.c == 1:
             self.d = self.a + self.b
 
-            self.label_question.configure(text=f"What is {self.a} + {self.b}?")
+            self.label_question.configure(text=f"{self.a} + {self.b}?")
             self.math_input = IntVar()
             prompt = ttk.Entry(width=14, textvariable=self.math_input)
             prompt.place(x=150, y=200)
